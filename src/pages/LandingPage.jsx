@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import stevePhoto from "../assets/a5.jpg";
 
 const IconMicroscope = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.8rem" height="1.8rem">
@@ -48,7 +49,7 @@ const TESTIMONIALS = [
   { quote: "Sun Arabia has helped us with our targets in MENA. I would recommend their services with full confidence.", name: "G. Jan. W.", role: "Pharmaceutical Director", market: "UK", img: "/src/assets/a2.jpg" },
   { quote: "Working with Carlo and the team has been great. Everything on time, completed to a high standard. Good communication and knowledge to meet all business needs.", name: "Charlie M", role: "Lotu Education", market: "USA", img: "/src/assets/a3.jpg" },
   { quote: "I enjoyed working with them on one of my start ups. It was very fun.", name: "Matt. K.M", role: "UK and UAE Real Estate Developer", market: "UAE / USA", img: "/src/assets/a4.jpg" },
-  { quote: "Sun Arabia brought clarity, commercial focus, and the kind of execution that turns strategy into measurable growth. The process was sharp, fast, and highly effective.", name: "Steve Moore", role: "Business Leader", market: "USA", img: "/src/assets/a1.jpg" },
+  { quote: "Sun Arabia brought clarity, commercial focus, and the kind of execution that turns strategy into measurable growth. The process was sharp, fast, and highly effective.", name: "Steve M.", role: "CEO of Xcite Entertainment", market: "USA", img: stevePhoto },
 ];
 
 function GoldDust() {
