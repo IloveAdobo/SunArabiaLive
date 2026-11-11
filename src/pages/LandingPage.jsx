@@ -49,15 +49,15 @@ const testimonials = [
 ];
 const phases = [
   {
-    title: "Diagnostic",
+    title: "Market audit",
     desc: "Review your funnel from first visit to conversion to find friction, missed opportunities, and the places worth focusing on first.",
   },
   {
-    title: "Architecture",
+    title: "Positioning",
     desc: "Align your positioning, website, and customer journey around a clear message and a more useful path to action.",
   },
   {
-    title: "Deployment",
+    title: "Campaigns",
     desc: "Bring your strategy to market through paid, organic, earned, and owned channels, coordinated around your priorities.",
   },
   {
@@ -435,7 +435,9 @@ export default function LandingPage() {
                   <br />
                   <em>ARABIA</em>
                 </span>
-                <small aria-live="polite">{phases[activePhase].title}</small>
+                <span className="solar-phase-label" aria-live="polite">
+                  {phases[activePhase].title}
+                </span>
               </div>
             </div>
             <div className="orbit-controls">
