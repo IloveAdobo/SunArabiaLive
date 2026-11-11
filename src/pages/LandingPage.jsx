@@ -50,19 +50,19 @@ const testimonials = [
 const phases = [
   {
     title: "Diagnostic",
-    desc: "Identifying revenue leaks in your current funnel — from traffic sources to conversion points — with forensic precision.",
+    desc: "Review your funnel from first visit to conversion to find friction, missed opportunities, and the places worth focusing on first.",
   },
   {
     title: "Architecture",
-    desc: "Building a high-conversion digital flagship. Every page, every touchpoint, every message engineered to close.",
+    desc: "Align your positioning, website, and customer journey around a clear message and a more useful path to action.",
   },
   {
     title: "Deployment",
-    desc: "Omnichannel promotion across global markets — paid, organic, earned, and owned — in perfect strategic alignment.",
+    desc: "Bring your strategy to market through paid, organic, earned, and owned channels, coordinated around your priorities.",
   },
   {
     title: "Optimization",
-    desc: "Continuous data-looping to increase Customer Lifetime Loyalty. We compound your growth every single month.",
+    desc: "Use performance data to refine your marketing, improve the customer experience, and guide what to do next.",
   },
 ];
 const differences = [
@@ -74,18 +74,18 @@ const differences = [
 const markets = [
   {
     region: "USA / UK",
-    title: "The Western Perspective",
-    desc: "We leverage high-velocity demand generation and aggressive scale-up tactics — turning market noise into qualified pipeline with relentless precision.",
+    title: "Reach the right buyers",
+    desc: "Clarify your positioning and build demand in competitive markets with focused B2B marketing strategy and execution.",
   },
   {
     region: "UAE / MENA",
-    title: "The Eastern Ambition",
-    desc: "We tap into the luxury-tier relationship building and rapid infrastructure growth of the MENA region — where trust is currency and positioning is everything.",
+    title: "Build trust across the region",
+    desc: "Shape your message and market approach around the relationships and local context that matter across the UAE and MENA.",
   },
   {
     region: "Sun Arabia Bridge",
-    title: "The Synthesis",
-    desc: "We act as your strategic bridge, allowing your brand to maintain a unified voice while executing localized dominance in the world's three most influential markets.",
+    title: "Keep your strategy connected",
+    desc: "Bring cross-market strategy and local execution together, with a consistent brand voice across teams and regions.",
   },
 ];
 const fields = [
@@ -349,7 +349,7 @@ export default function LandingPage() {
         <div className="container nav-inner">
           <Brand />
           <nav aria-label="Main navigation" className="desktop-nav">
-            <a href="#about">Our approach</a>
+            <a href="#about">How we work</a>
             <a href="#process">The Solar Cycle</a>
             <a href="#voices">Client voices</a>
           </nav>
@@ -375,7 +375,7 @@ export default function LandingPage() {
           hidden={!menuOpen}
         >
           <a ref={firstMenuLink} onClick={closeMenu} href="#about">
-            Our approach
+            How we work
           </a>
           <a onClick={closeMenu} href="#process">
             The Solar Cycle
@@ -395,26 +395,23 @@ export default function LandingPage() {
         <section id="hero" className="hero-section container">
           <div className="hero-content">
             <h1>
-              Architecting
+              Marketing strategy
               <br />
-              market dominance.
+              for your next
               <br />
-              <em>
-                For the best
-                <br className="desktop-break" /> in the world.
-              </em>
+              <em>stage of growth.</em>
             </h1>
             <p>
-              We don’t manage budgets. We deploy capital. Sun Arabia is the
-              strategic revenue partner for B2B enterprises that demand a seat
-              at the head of the table.
+              We help B2B companies reach the right customers, sharpen their
+              positioning, and turn marketing priorities into focused action
+              across the USA, UK, and UAE/MENA.
             </p>
             <div className="hero-actions">
               <a className="button" href="#pricing">
                 Explore the Clarity Workshop <Arrow diagonal />
               </a>
               <a className="text-link" href="#about">
-                Our approach <Arrow />
+                How we work <Arrow />
               </a>
             </div>
           </div>
@@ -510,7 +507,7 @@ export default function LandingPage() {
             <a
               className="scroll-link"
               href="#about"
-              aria-label="Discover our approach"
+              aria-label="Discover how we work"
             >
               <Arrow />
             </a>
@@ -519,36 +516,34 @@ export default function LandingPage() {
         <section id="about" className="section container about-section">
           <div className="section-heading">
             <h2>
-              The antithesis of the
+              Marketing that moves
               <br />
-              <em>traditional agency.</em>
+              <em>business forward.</em>
             </h2>
             <p>
-              Institutional-grade strategy.
-              <br /> High-end brand sovereignty.
+              Clear strategy.
+              <br /> Focused execution.
             </p>
           </div>
           <div className="about-grid">
             <div className="about-copy">
               <p>
-                Having navigated the world’s most competitive landscapes for
-                over a decade, we understand that true growth is not found in
-                vanity metrics, but in the compounding value of{" "}
-                <strong>Customer Lifetime Loyalty.</strong>
+                Effective marketing starts with knowing where to focus. We
+                connect your positioning, digital presence, and demand
+                generation to the commercial goals that matter.
               </p>
               <p>
-                We are a high-conviction partner for B2B enterprises that
-                prioritize revenue over “reach.” We serve a global portfolio of
-                visionaries who demand more than just deliverables — they demand
-                a seat at the head of the table.
+                Our work spans the customer journey: identifying friction,
+                strengthening your digital presence, and aligning marketing
+                activity with business priorities.
               </p>
               <p>
-                We don’t manage budgets; we deploy capital to ensure your brand
-                doesn’t just participate in the market,{" "}
-                <strong>but dictates it.</strong>
+                For B2B companies growing across the USA, UK, and UAE/MENA, we
+                bring strategy and execution together so your next move is
+                <strong> clear and considered.</strong>
               </p>
               <a className="text-link" href="#process">
-                Meet your growth framework <Arrow />
+                See how we work <Arrow />
               </a>
             </div>
             <div className="principle">
@@ -588,8 +583,8 @@ export default function LandingPage() {
                 The <em>Solar Cycle.</em>
               </h2>
               <p>
-                A four-phase proprietary framework engineered
-                <br /> for compounding revenue growth.
+                Four connected phases, from marketing diagnosis
+                <br /> to focused execution and ongoing improvement.
               </p>
             </div>
             <div className="process-layout">
@@ -649,13 +644,13 @@ export default function LandingPage() {
         <section className="section container markets-section">
           <div className="section-heading">
             <h2>
-              Three power hubs.
+              One partner.
               <br />
-              <em>One growth engine.</em>
+              <em>Three market perspectives.</em>
             </h2>
             <p>
-              A global perspective.
-              <br /> Precisely local execution.
+              Shared strategy.
+              <br /> Local understanding.
             </p>
           </div>
           <MarketBridge />
@@ -673,13 +668,13 @@ export default function LandingPage() {
           <div className="container">
             <div className="section-heading">
               <h2>
-                Results that
+                Marketing partnership,
                 <br />
-                <em>speak for themselves.</em>
+                <em>in their words.</em>
               </h2>
               <p>
-                Trusted by visionary leaders across three of
-                <br /> the world’s most competitive markets.
+                Hear from leaders who have worked with Sun Arabia
+                <br /> across the USA, UK, and UAE.
               </p>
             </div>
             <div className="testimonials">
@@ -704,11 +699,13 @@ export default function LandingPage() {
         <section className="section container difference-section">
           <div className="section-heading">
             <h2>
-              Categorically <em>different.</em>
+              A partner focused on
+              <br />
+              <em>business growth.</em>
             </h2>
             <p>
-              Our focus is your growth.
-              <br /> Our model reflects it.
+              A clear point of view on what
+              <br /> makes a useful marketing partner.
             </p>
           </div>
           <table className="comparison">
@@ -749,18 +746,19 @@ export default function LandingPage() {
           <div className="container workshop-layout">
             <div>
               <h2>
-                Clarity first.
+                Start with a clear
                 <br />
-                <em>Dominance follows.</em>
+                <em>marketing plan.</em>
               </h2>
               <p className="workshop-intro">
-                Stop guessing. Start executing. Our Paid Strategy & Audit is a
-                deep-tissue diagnostic of your Website, Social, and Revenue
-                Architecture.
+                A paid strategy and audit to assess your website, social
+                channels, and revenue architecture—and show you where to focus
+                next.
               </p>
               <p>
-                We provide the roadmap; you decide if we are the ones to drive
-                it. No long-term contracts. Just pure ROI.
+                Leave with a clear roadmap for your next move. If it makes
+                sense to continue together, we can discuss execution—without a
+                long-term contract.
               </p>
             </div>
             <div className="workshop-offer">
@@ -782,7 +780,7 @@ export default function LandingPage() {
                 )}
               </ul>
               <a className="button" href="#contact">
-                Book your Clarity Workshop <Arrow diagonal />
+                Talk to us about the workshop <Arrow diagonal />
               </a>
               <p>
                 No long-term commitment. Fully refundable within 48h if not
@@ -794,21 +792,21 @@ export default function LandingPage() {
         <section id="contact" className="section container contact-section">
           <div>
             <h2>
-              Ready to dictate
+              Let’s talk about
               <br />
-              <em>your market?</em>
+              <em>your growth goals.</em>
             </h2>
             <p>
-              Start with a conversation.
+              Tell us what you’re working toward
               <br />
-              Tell us where you want to go.
+              and which markets you want to reach.
             </p>
             <div className="contact-signature">
               <SunMark />
               <span>
-                Independent strategy.
+                Marketing strategy.
                 <br />
-                Shared ambition.
+                Global perspective.
               </span>
             </div>
           </div>
@@ -819,8 +817,8 @@ export default function LandingPage() {
                   Your enquiry preview
                 </h3>
                 <p>
-                  Online enquiries are not connected yet. Your details have not
-                  been sent.
+                  This preview stays on this page. Your details have not been
+                  sent.
                 </p>
                 <dl>
                   <dt>Name</dt>
@@ -860,8 +858,8 @@ export default function LandingPage() {
                 }}
               >
                 <p className="form-notice" id="form-notice">
-                  Online enquiries are currently unavailable. You can preview
-                  your enquiry below; it will not be sent.
+                  The enquiry form isn’t connected yet, so your details won’t
+                  be sent. You can still preview what you’ve entered.
                 </p>
                 <div className="form-grid">
                   {fields.map(({ key, label, ...inputProps }) => (
@@ -892,7 +890,7 @@ export default function LandingPage() {
                       id="msg"
                       name="msg"
                       rows="4"
-                      placeholder="What would meaningful growth look like for your business?"
+                      placeholder="What would you like your marketing to achieve?"
                       value={formState.msg}
                       onChange={(event) =>
                         setFormState({ ...formState, msg: event.target.value })
@@ -922,7 +920,7 @@ export default function LandingPage() {
         <div className="footer-top">
           <Brand />
           <nav aria-label="Footer navigation">
-            <a href="#about">Our approach</a>
+            <a href="#about">How we work</a>
             <a href="#pricing">The workshop</a>
             <a href="#contact">Contact</a>
           </nav>
@@ -933,7 +931,7 @@ export default function LandingPage() {
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Sun Arabia Marketing Agency</span>
           <span>USA · UK · UAE</span>
-          <span>Strategy. Sovereignty. Growth.</span>
+          <span>Marketing strategy. Growth across markets.</span>
         </div>
       </footer>
     </div>
