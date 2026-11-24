@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -492,6 +492,64 @@ const layouts = {
   editorial: Editorial,
 };
 
+/* Baked stills of each template's 3D hero (scripts/bake-template-heroes.mjs). */
+const heroImages = import.meta.glob("../assets/template-heroes/*.webp", {
+  eager: true,
+  import: "default",
+});
+const systemPath = {
+  shop: "/shop",
+  booking: "/book",
+  dashboard: "/dashboard",
+  listing: "/search",
+  menu: "/order",
+  portal: "/portal",
+  editorial: "/work",
+};
+const LANDING_MS = 3200;
+const SYSTEM_MS = 4600;
+
+/* Miniature of the template's 3D landing page (mirrors TemplateSite's hero). */
+function MiniLanding({ template }) {
+  const { demo, site } = template;
+  const image = heroImages[`../assets/template-heroes/${template.slug}.webp`];
+  return (
+    <div className={`tpv-landing tpv-landing--${site.hero} tpv-font-${site.font}`}>
+      <div className="tpv-nav tpv-landing-nav">
+        <span className="tpv-logo">
+          <i>
+            <Icon icon={template.icon} />
+          </i>
+          {demo.brand}
+        </span>
+        <span className="tpv-links">
+          <span>Features</span>
+          <span>Results</span>
+          <span className="tpv-btn">{template.action}</span>
+        </span>
+      </div>
+      <div className="tpv-landing-hero">
+        <div className="tpv-landing-copy">
+          <em className="tpv-eyebrow">{template.category}</em>
+          <strong>{template.tagline}</strong>
+          <small>{template.solves}</small>
+          <span className="tpv-landing-actions">
+            <span className="tpv-btn">{template.action}</span>
+            <span className="tpv-btn tpv-btn-ghost">How it works</span>
+          </span>
+        </div>
+        <div className="tpv-landing-3d">
+          {image ? (
+            <img src={image} alt="" loading="lazy" decoding="async" />
+          ) : (
+            <Icon icon={template.icon} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* Floating "live event" card that hovers in front of the screen in 3D. */
 function floatingCard({ layout, demo }) {
   switch (layout) {
@@ -516,9 +574,52 @@ const canTilt = () =>
   window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
   !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export default function TemplatePreview({ template }) {
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+export default function TemplatePreview({ template, showLanding = true }) {
   const ref = useRef(null);
   const frame = useRef(0);
+  const [slide, setSlide] = useState(showLanding ? 0 : 1);
+  const slideRef = useRef(slide);
+
+  // Landing page first, then the system; loops only while the card is on screen.
+  useEffect(() => {
+    if (!showLanding || prefersReducedMotion()) return;
+    let timer = 0;
+    let visible = false;
+    const show = (next) => {
+      slideRef.current = next;
+      setSlide(next);
+      timer = setTimeout(() => show(next ? 0 : 1), next ? SYSTEM_MS : LANDING_MS);
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !visible) {
+          visible = true;
+          const next = slideRef.current ? 0 : 1;
+          timer = setTimeout(
+            () => show(next),
+            slideRef.current ? SYSTEM_MS : LANDING_MS,
+          );
+        } else if (!entry.isIntersecting && visible) {
+          visible = false;
+          clearTimeout(timer);
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(ref.current);
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+  }, [showLanding]);
+
+  // Reduced motion: no auto-play; hovering shows the system instead.
+  const onPointerEnter = () => {
+    if (showLanding && prefersReducedMotion()) setSlide(1);
+  };
   const Layout = layouts[template.layout];
   const float = floatingCard(template);
   const domain = `${template.demo.brand
@@ -540,6 +641,7 @@ export default function TemplatePreview({ template }) {
     });
   };
   const onPointerLeave = () => {
+    if (showLanding && prefersReducedMotion()) setSlide(0);
     cancelAnimationFrame(frame.current);
     const el = ref.current;
     el.style.removeProperty("--px");
@@ -552,6 +654,8 @@ export default function TemplatePreview({ template }) {
       ref={ref}
       className="template-preview"
       style={{ "--tpv-accent": template.accent }}
+      data-slide={slide}
+      onPointerEnter={onPointerEnter}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       aria-hidden="true"
@@ -565,10 +669,24 @@ export default function TemplatePreview({ template }) {
             <span>
               <Icon icon={faLock} />
               {domain}
+              <b className="tpv-path">{slide ? systemPath[template.layout] : ""}</b>
             </span>
+            {showLanding && (
+              <span className="tpv-dots">
+                <i className={slide ? "" : "is-on"} />
+                <i className={slide ? "is-on" : ""} />
+              </span>
+            )}
           </div>
-          <div className={`tpv-body tpv-layout-${template.layout}`}>
-            <Layout template={template} />
+          <div className="tpv-slides">
+            {showLanding && (
+              <div className="tpv-slide tpv-slide-landing">
+                <MiniLanding template={template} />
+              </div>
+            )}
+            <div className={`tpv-slide tpv-slide-system tpv-body tpv-layout-${template.layout}`}>
+              <Layout template={template} />
+            </div>
           </div>
           <div className="tpv-glare" />
         </div>

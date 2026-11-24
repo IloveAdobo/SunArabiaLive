@@ -48,6 +48,37 @@ import {
   faUsers,
   faUtensils,
   faWrench,
+  faAward,
+  faBook,
+  faBurger,
+  faCalendarCheck,
+  faCalendarDays,
+  faChampagneGlasses,
+  faChartPie,
+  faCity,
+  faCreditCard,
+  faDroplet,
+  faFileSignature,
+  faGift,
+  faGlobe,
+  faHandshake,
+  faHeartPulse,
+  faHouseChimney,
+  faKey,
+  faLightbulb,
+  faMapLocationDot,
+  faMusic,
+  faPencil,
+  faPizzaSlice,
+  faRoute,
+  faRulerCombined,
+  faScrewdriverWrench,
+  faSeedling,
+  faShieldHeart,
+  faSprayCanSparkles,
+  faSuitcaseRolling,
+  faTag,
+  faWineGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const templateCategories = [
@@ -913,8 +944,57 @@ export const slugify = (text) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-export const templates = templateList.map((template) => ({
+
+/* ---------- Unique 3D landing page per template ----------
+ * Every template gets its own (hero layout, 3D scene) pair. With 6 layouts and
+ * 7 scenes there are 42 combinations; index i maps to
+ * (i % 6, (floor(i / 6) + 2 * (i % 6)) % 7), which never repeats for i < 42.
+ */
+export const heroLayouts = ["split", "reverse", "center", "dark", "mega", "card"];
+export const heroScenes = [
+  "orbit",
+  "constellation",
+  "podium",
+  "panels",
+  "wave",
+  "blob",
+  "rings",
+];
+
+/* Industry-themed icons that float around the main 3D object. */
+const categoryProps = {
+  "Retail & E-commerce": [faBagShopping, faTag, faCreditCard, faGift],
+  "Food & Hospitality": [faMugHot, faWineGlass, faPizzaSlice, faBurger],
+  "Health & Wellness": [faHeartPulse, faCalendarCheck, faShieldHeart, faDroplet],
+  "Professional Services": [faFileSignature, faChartPie, faHandshake, faBriefcase],
+  "Real Estate & Construction": [faKey, faHouseChimney, faRulerCombined, faCity],
+  "Education & Training": [faBook, faLightbulb, faPencil, faAward],
+  "Travel, Logistics & Auto": [faGlobe, faMapLocationDot, faSuitcaseRolling, faRoute],
+  "Events & Community": [faMusic, faCalendarDays, faChampagneGlasses, faHandshake],
+  "Home & Local Services": [faHouseChimney, faScrewdriverWrench, faSprayCanSparkles, faSeedling],
+};
+const serifCategories = new Set([
+  "Food & Hospitality",
+  "Real Estate & Construction",
+  "Events & Community",
+]);
+
+function siteDesign(template, i) {
+  const layoutIndex = i % heroLayouts.length;
+  const sceneIndex =
+    (Math.floor(i / heroLayouts.length) + 2 * layoutIndex) % heroScenes.length;
+  const shopIcons = template.layout === "shop" && template.demo.items.map((item) => item.i);
+  return {
+    hero: heroLayouts[layoutIndex],
+    scene: heroScenes[sceneIndex],
+    font: serifCategories.has(template.category) ? "serif" : "sans",
+    props: shopIcons || categoryProps[template.category],
+  };
+}
+
+export const templates = templateList.map((template, i) => ({
   ...template,
+  site: siteDesign(template, i),
   slug: slugify(template.name),
   tagline: taglines[template.name] ?? template.solves,
   action:

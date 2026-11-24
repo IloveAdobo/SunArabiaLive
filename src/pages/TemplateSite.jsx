@@ -88,7 +88,10 @@ export default function TemplateSite({ slug }) {
   const selfHref = `#/templates/${template.slug}`;
 
   return (
-    <div className="ts" style={{ "--ts-accent": template.accent }}>
+    <div
+      className={`ts ts--${template.site.font}`}
+      style={{ "--ts-accent": template.accent }}
+    >
       <div className="ts-demobar">
         <a href="#templates" className="ts-demobar-back">
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -106,26 +109,26 @@ export default function TemplateSite({ slug }) {
         </a>
       </div>
 
-      <header className="ts-nav">
-        <a className="ts-logo" href={selfHref} onClick={(e) => scrollToId(e, "ts-top")}>
-          <i>
-            <FontAwesomeIcon icon={template.icon} />
-          </i>
-          {demo.brand}
-        </a>
-        <nav aria-label={`${demo.brand} navigation`}>
-          {siteLinks.map(([label, id]) => (
-            <a key={id} href={selfHref} onClick={(e) => scrollToId(e, id)}>
-              {label}
-            </a>
-          ))}
-        </nav>
-        <a className="ts-btn ts-btn-small" href={selfHref} onClick={(e) => scrollToId(e, "ts-contact")}>
-          {template.action}
-        </a>
-      </header>
+      <div className={`ts-top ts-top--${template.site.hero}`}>
+        <header className="ts-nav">
+          <a className="ts-logo" href={selfHref} onClick={(e) => scrollToId(e, "ts-top")}>
+            <i>
+              <FontAwesomeIcon icon={template.icon} />
+            </i>
+            {demo.brand}
+          </a>
+          <nav aria-label={`${demo.brand} navigation`}>
+            {siteLinks.map(([label, id]) => (
+              <a key={id} href={selfHref} onClick={(e) => scrollToId(e, id)}>
+                {label}
+              </a>
+            ))}
+          </nav>
+          <a className="ts-btn ts-btn-small" href={selfHref} onClick={(e) => scrollToId(e, "ts-contact")}>
+            {template.action}
+          </a>
+        </header>
 
-      <main>
         <section className="ts-hero" id="ts-top">
           <div className="ts-hero-copy">
             <span className="ts-eyebrow">
@@ -173,7 +176,9 @@ export default function TemplateSite({ slug }) {
             ))}
           </div>
         </section>
+      </div>
 
+      <main>
         <section className="ts-section" id="ts-features">
           <div className="ts-heading">
             <span className="ts-eyebrow">
@@ -211,7 +216,7 @@ export default function TemplateSite({ slug }) {
             <p>{template.solves}</p>
           </div>
           <div className="ts-showcase-frame">
-            <TemplatePreview template={template} />
+            <TemplatePreview template={template} showLanding={false} />
           </div>
         </section>
 
