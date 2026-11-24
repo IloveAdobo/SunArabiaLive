@@ -4,6 +4,10 @@ import janPhoto from "../assets/a2.jpg";
 import charliePhoto from "../assets/a3.jpg";
 import mattPhoto from "../assets/a4.jpg";
 import stevePhoto from "../assets/a5.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TemplatePreview from "../components/TemplatePreview";
+import { templateCategories, templates } from "../data/templates";
+import "../templates.css";
 
 const testimonials = [
   {
@@ -88,295 +92,7 @@ const markets = [
     desc: "We act as your strategic bridge, allowing your brand to maintain a unified voice while executing localized dominance in the world's three most influential markets.",
   },
 ];
-const templateCategories = [
-  "Retail & E-commerce",
-  "Food & Hospitality",
-  "Health & Wellness",
-  "Professional Services",
-  "Real Estate & Construction",
-  "Education & Training",
-  "Travel, Logistics & Auto",
-  "Events & Community",
-  "Home & Local Services",
-];
-const templates = [
-  {
-    name: "Online Store",
-    category: "Retail & E-commerce",
-    layout: "shop",
-    solves: "Sell products around the clock without giving a marketplace a cut of every order.",
-    features: ["Product catalogue & cart", "Secure checkout", "Inventory & order tracking"],
-  },
-  {
-    name: "B2B Wholesale Portal",
-    category: "Retail & E-commerce",
-    layout: "dashboard",
-    solves: "Replaces phone, email and spreadsheet orders from trade customers.",
-    features: ["Tiered customer pricing", "Bulk reorder lists", "Invoices & credit terms"],
-  },
-  {
-    name: "Grocery & Local Delivery",
-    category: "Retail & E-commerce",
-    layout: "shop",
-    solves: "Takes neighbourhood orders online and schedules every delivery slot.",
-    features: ["Delivery slot booking", "Substitution preferences", "Driver dispatch board"],
-  },
-  {
-    name: "Pharmacy",
-    category: "Retail & E-commerce",
-    layout: "shop",
-    solves: "Moves prescription refills and stock questions off the phone line.",
-    features: ["Refill requests", "Click & collect", "Live stock lookup"],
-  },
-  {
-    name: "Restaurant & Ordering",
-    category: "Food & Hospitality",
-    layout: "menu",
-    solves: "Captures direct orders and table bookings without commission-heavy apps.",
-    features: ["Online menu & ordering", "Table reservations", "Kitchen order screen"],
-  },
-  {
-    name: "Hotel & Resort",
-    category: "Food & Hospitality",
-    layout: "booking",
-    solves: "Drives direct bookings instead of paying travel-site commissions.",
-    features: ["Room availability calendar", "Rates & packages", "Guest pre-arrival forms"],
-  },
-  {
-    name: "Café Loyalty & Pre-order",
-    category: "Food & Hospitality",
-    layout: "menu",
-    solves: "Turns one-off walk-ins into regulars who order ahead.",
-    features: ["Order-ahead pickup", "Digital stamp card", "SMS & email promotions"],
-  },
-  {
-    name: "Catering Company",
-    category: "Food & Hospitality",
-    layout: "menu",
-    solves: "Turns slow back-and-forth quoting into instant, bookable packages.",
-    features: ["Package builder", "Instant quotes", "Deposit payments"],
-  },
-  {
-    name: "Medical Clinic",
-    category: "Health & Wellness",
-    layout: "booking",
-    solves: "Cuts no-shows and front-desk phone time.",
-    features: ["Online appointments", "Patient intake forms", "Automated reminders"],
-  },
-  {
-    name: "Dental Practice",
-    category: "Health & Wellness",
-    layout: "booking",
-    solves: "Keeps the chair calendar full and recalls patients on time.",
-    features: ["Treatment pages", "Recall reminders", "Insurance pre-check"],
-  },
-  {
-    name: "Gym & Fitness Studio",
-    category: "Health & Wellness",
-    layout: "booking",
-    solves: "Sells memberships and class spots without a front-desk queue.",
-    features: ["Class timetable & booking", "Recurring memberships", "Member portal"],
-  },
-  {
-    name: "Salon & Spa",
-    category: "Health & Wellness",
-    layout: "booking",
-    solves: "Lets clients book their stylist or therapist at any hour.",
-    features: ["Staff-based scheduling", "No-show deposits", "Gift vouchers"],
-  },
-  {
-    name: "Veterinary & Pet Care",
-    category: "Health & Wellness",
-    layout: "booking",
-    solves: "Organises appointments, records and boarding in one place.",
-    features: ["Appointment booking", "Pet health records", "Boarding reservations"],
-  },
-  {
-    name: "Law Firm",
-    category: "Professional Services",
-    layout: "portal",
-    solves: "Qualifies enquiries and shares case documents securely.",
-    features: ["Practice-area pages", "Client intake & conflict check", "Secure document portal"],
-  },
-  {
-    name: "Accounting & Tax",
-    category: "Professional Services",
-    layout: "portal",
-    solves: "Collects client documents without the email chaos at deadline time.",
-    features: ["Upload checklists", "E-signed engagement letters", "Deadline reminders"],
-  },
-  {
-    name: "Consulting & Agency",
-    category: "Professional Services",
-    layout: "editorial",
-    solves: "Proves expertise and turns readers into booked discovery calls.",
-    features: ["Case study library", "Calendar booking", "Lead-scoring CRM"],
-  },
-  {
-    name: "Recruitment & Job Board",
-    category: "Professional Services",
-    layout: "listing",
-    solves: "Matches candidates to open roles in one searchable place.",
-    features: ["Job listings & filters", "Candidate applications", "Employer dashboard"],
-  },
-  {
-    name: "Insurance Broker",
-    category: "Professional Services",
-    layout: "portal",
-    solves: "Generates quotes online and routes warm leads to the right agent.",
-    features: ["Multi-step quote forms", "Policy document portal", "Renewal reminders"],
-  },
-  {
-    name: "Property Listings",
-    category: "Real Estate & Construction",
-    layout: "listing",
-    solves: "Showcases properties and captures viewing requests automatically.",
-    features: ["Map search & filters", "Viewing scheduler", "Agent lead routing"],
-  },
-  {
-    name: "Property Management",
-    category: "Real Estate & Construction",
-    layout: "dashboard",
-    solves: "Gives tenants and owners self-service instead of endless calls.",
-    features: ["Online rent payments", "Maintenance requests", "Owner statements"],
-  },
-  {
-    name: "Construction & Contractors",
-    category: "Real Estate & Construction",
-    layout: "editorial",
-    solves: "Wins bids with a credible portfolio and structured quote requests.",
-    features: ["Project portfolio", "Quote requests with uploads", "Client progress updates"],
-  },
-  {
-    name: "Interior Design Studio",
-    category: "Real Estate & Construction",
-    layout: "editorial",
-    solves: "Pre-qualifies clients by style and budget before the first call.",
-    features: ["Visual portfolio", "Style & budget quiz", "Consultation booking"],
-  },
-  {
-    name: "School & Admissions",
-    category: "Education & Training",
-    layout: "portal",
-    solves: "Moves paper applications and parent updates online.",
-    features: ["Online applications", "Parent portal", "Events calendar"],
-  },
-  {
-    name: "Online Course Platform",
-    category: "Education & Training",
-    layout: "dashboard",
-    solves: "Packages expertise into courses that sell while you sleep.",
-    features: ["Course player", "Paid enrolments", "Progress & certificates"],
-  },
-  {
-    name: "Tutoring & Coaching",
-    category: "Education & Training",
-    layout: "booking",
-    solves: "Fills session calendars and sells packages, not single hours.",
-    features: ["Tutor profiles", "Session packages", "Video session links"],
-  },
-  {
-    name: "Training Centre",
-    category: "Education & Training",
-    layout: "listing",
-    solves: "Handles group registrations and certificate checks for employers.",
-    features: ["Course schedule", "Group registrations", "Certificate verification"],
-  },
-  {
-    name: "Travel Agency & Tours",
-    category: "Travel, Logistics & Auto",
-    layout: "listing",
-    solves: "Sells packages online and collects deposits up front.",
-    features: ["Package catalogue", "Itinerary builder", "Deposit payments"],
-  },
-  {
-    name: "Courier & Logistics",
-    category: "Travel, Logistics & Auto",
-    layout: "dashboard",
-    solves: "Lets customers price, book and track shipments themselves.",
-    features: ["Shipment tracking", "Rate calculator", "Business accounts"],
-  },
-  {
-    name: "Car Rental",
-    category: "Travel, Logistics & Auto",
-    layout: "booking",
-    solves: "Shows live fleet availability and verifies drivers before pickup.",
-    features: ["Fleet availability", "Pickup & return scheduling", "Document verification"],
-  },
-  {
-    name: "Auto Repair & Service",
-    category: "Travel, Logistics & Auto",
-    layout: "booking",
-    solves: "Books service slots and gets repair quotes approved faster.",
-    features: ["Service booking", "Vehicle history", "Online quote approval"],
-  },
-  {
-    name: "Car Dealership",
-    category: "Travel, Logistics & Auto",
-    layout: "listing",
-    solves: "Turns inventory browsers into booked test drives and finance leads.",
-    features: ["Inventory search", "Finance calculator", "Test drive booking"],
-  },
-  {
-    name: "Event Ticketing",
-    category: "Events & Community",
-    layout: "listing",
-    solves: "Sells tickets directly and checks guests in at the door.",
-    features: ["Ticket tiers", "QR check-in", "Attendee emails"],
-  },
-  {
-    name: "Wedding & Event Planner",
-    category: "Events & Community",
-    layout: "editorial",
-    solves: "Keeps couples, vendors and timelines aligned in one place.",
-    features: ["Package pages", "Planning checklist portal", "Vendor coordination"],
-  },
-  {
-    name: "Nonprofit & Charity",
-    category: "Events & Community",
-    layout: "editorial",
-    solves: "Grows recurring donations and volunteer sign-ups.",
-    features: ["Online donations", "Campaign progress", "Volunteer sign-ups"],
-  },
-  {
-    name: "Membership Association",
-    category: "Events & Community",
-    layout: "portal",
-    solves: "Automates dues renewals and gives members gated resources.",
-    features: ["Member directory", "Dues renewals", "Members-only resources"],
-  },
-  {
-    name: "Home Services",
-    category: "Home & Local Services",
-    layout: "booking",
-    solves: "Cleaning, plumbing, HVAC: instant quotes and dispatched jobs.",
-    features: ["Instant quote & booking", "Technician dispatch", "Service-area pages"],
-  },
-  {
-    name: "Moving & Storage",
-    category: "Home & Local Services",
-    layout: "dashboard",
-    solves: "Estimates moves online and rents storage units without paperwork.",
-    features: ["Move estimate calculator", "Storage unit rental", "Crew scheduling"],
-  },
-  {
-    name: "Landscaping & Outdoor",
-    category: "Home & Local Services",
-    layout: "editorial",
-    solves: "Converts seasonal demand into recurring maintenance contracts.",
-    features: ["Before & after gallery", "Site visit booking", "Recurring service plans"],
-  },
-];
-const TEMPLATE_PREVIEW_COUNT = 9;
-const previewCells = {
-  shop: 6,
-  booking: 21,
-  dashboard: 6,
-  listing: 3,
-  menu: 6,
-  portal: 3,
-  editorial: 3,
-};
+const TEMPLATE_PREVIEW_COUNT = 8;
 const fields = [
   {
     key: "name",
@@ -455,33 +171,6 @@ function Portrait({ client }) {
         <span>{client.role}</span>
       </div>
       <span className="client-market">{client.market}</span>
-    </div>
-  );
-}
-
-function TemplatePreview({ layout }) {
-  return (
-    <div className={`template-preview tp-${layout}`} aria-hidden="true">
-      <div className="tp-chrome">
-        <i />
-        <i />
-        <i />
-      </div>
-      <div className="tp-nav">
-        <b />
-        <span />
-        <span />
-        <span />
-      </div>
-      <div className="tp-hero">
-        <b />
-        <span />
-      </div>
-      <div className="tp-grid">
-        {Array.from({ length: previewCells[layout] }, (_, i) => (
-          <span key={i} />
-        ))}
-      </div>
     </div>
   );
 }
@@ -1015,74 +704,89 @@ export default function LandingPage() {
                 we tailor it to you.
               </p>
             </div>
-            <div
-              className="template-filters"
-              role="group"
-              aria-label="Filter templates by industry"
-            >
-              {["All", ...templateCategories].map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  aria-pressed={templateFilter === category}
-                  onClick={() => {
-                    setTemplateFilter(category);
-                    setShowAllTemplates(false);
-                  }}
+            <div className="templates-layout">
+              <aside className="template-sidebar">
+                <span className="template-sidebar-label">Browse by industry</span>
+                <div
+                  className="template-filters"
+                  role="group"
+                  aria-label="Filter templates by industry"
                 >
-                  {category}
-                  <span>
-                    {category === "All"
-                      ? templates.length
-                      : templates.filter((t) => t.category === category)
-                          .length}
-                  </span>
-                </button>
-              ))}
-            </div>
-            <p className="template-count" aria-live="polite">
-              Showing {visibleTemplates.length} of {filteredTemplates.length}{" "}
-              {templateFilter === "All" ? "templates" : templateFilter}
-            </p>
-            <div className="template-grid">
-              {visibleTemplates.map((template) => (
-                <article className="template-card" key={template.name}>
-                  <TemplatePreview layout={template.layout} />
-                  <span className="template-category">{template.category}</span>
-                  <h3>{template.name}</h3>
-                  <p>{template.solves}</p>
-                  <ul className="template-features">
-                    {template.features.map((feature) => (
-                      <li key={feature}>{feature}</li>
-                    ))}
-                  </ul>
-                  <a
-                    className="text-link"
-                    href="#contact"
-                    onClick={() => requestTemplate(template)}
-                  >
-                    Request this template
-                    <span className="sr-only">: {template.name}</span>
-                    <Arrow diagonal />
-                  </a>
-                </article>
-              ))}
-            </div>
-            <div className="template-footer">
-              {visibleTemplates.length < filteredTemplates.length && (
-                <button
-                  type="button"
-                  className="button"
-                  onClick={() => setShowAllTemplates(true)}
-                >
-                  View all {filteredTemplates.length} templates <Arrow />
-                </button>
-              )}
-              <p>
-                Don’t see your industry? Every template is a starting point.
-                We build custom web systems for any business model.{" "}
-                <a href="#contact">Tell us what you need.</a>
-              </p>
+                  {templateCategories.map((category, index) => (
+                    <button
+                      key={category.value}
+                      type="button"
+                      aria-pressed={templateFilter === category.value}
+                      onClick={() => {
+                        setTemplateFilter(category.value);
+                        setShowAllTemplates(false);
+                      }}
+                    >
+                      <span className="filter-index">
+                        {String(index).padStart(2, "0")}
+                      </span>
+                      <FontAwesomeIcon
+                        icon={category.icon}
+                        className="filter-icon"
+                      />
+                      <span className="filter-name">{category.name}</span>
+                      <span className="filter-count">
+                        {category.value === "All"
+                          ? templates.length
+                          : templates.filter((t) => t.category === category.value)
+                              .length}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </aside>
+              <div className="template-results">
+                <p className="template-count" aria-live="polite">
+                  Showing <strong>{visibleTemplates.length}</strong> of{" "}
+                  {filteredTemplates.length}{" "}
+                  {templateFilter === "All" ? "templates" : `${templateFilter} templates`}
+                </p>
+                <div className="template-grid">
+                  {visibleTemplates.map((template) => (
+                    <article className="template-card" key={template.name}>
+                      <TemplatePreview template={template} />
+                      <span className="template-category">{template.category}</span>
+                      <h3>{template.name}</h3>
+                      <p>{template.solves}</p>
+                      <ul className="template-features">
+                        {template.features.map((feature) => (
+                          <li key={feature}>{feature}</li>
+                        ))}
+                      </ul>
+                      <a
+                        className="text-link"
+                        href="#contact"
+                        onClick={() => requestTemplate(template)}
+                      >
+                        Request this template
+                        <span className="sr-only">: {template.name}</span>
+                        <Arrow diagonal />
+                      </a>
+                    </article>
+                  ))}
+                </div>
+                <div className="template-footer">
+                  {visibleTemplates.length < filteredTemplates.length && (
+                    <button
+                      type="button"
+                      className="button"
+                      onClick={() => setShowAllTemplates(true)}
+                    >
+                      View all {filteredTemplates.length} templates <Arrow />
+                    </button>
+                  )}
+                  <p>
+                    Don’t see your industry? Every template is a starting point.
+                    We build custom web systems for any business model.{" "}
+                    <a href="#contact">Tell us what you need.</a>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
