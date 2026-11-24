@@ -202,13 +202,186 @@
    Template preview — a scaled, light-themed mini website / web app.
    Everything inside .tpv is sized in em so it scales with the card width.
    ========================================================================== */
+/* ---------- 3D stage ----------
+   --px / --py run from -0.5 to 0.5 with the pointer (set in TemplatePreview). */
 .template-preview {
+  --px: 0;
+  --py: 0;
+  --tpv-ease: cubic-bezier(0.16, 1, 0.3, 1);
   container-type: inline-size;
   overflow: hidden;
+  padding: 5% 6% 7% 4%;
+  perspective: 1100px;
+  background:
+    radial-gradient(
+      ellipse 70% 60% at 45% 55%,
+      color-mix(in srgb, var(--tpv-accent) 30%, transparent),
+      transparent 75%
+    ),
+    #1a1d19;
   border: 1px solid #2f332c;
   border-radius: 4px;
-  box-shadow: 0 22px 40px -28px rgba(0, 0, 0, 0.9);
 }
+.tpv-stage {
+  position: relative;
+  font-size: 2.2cqi;
+  transform-style: preserve-3d;
+  transform: rotateX(9deg) rotateY(-14deg) rotateZ(1.5deg);
+  transition: transform 0.7s var(--tpv-ease);
+}
+.template-preview[data-active] .tpv-stage {
+  transform: rotateX(calc(var(--py) * -14deg)) rotateY(calc(var(--px) * 18deg));
+  transition-duration: 0.15s;
+}
+.tpv {
+  position: relative;
+  border-radius: 0.6em;
+  box-shadow:
+    calc(1.6em - var(--px) * 2.4em) calc(2.6em - var(--py) * 2.4em) 3.4em -1.2em
+      rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.7s var(--tpv-ease);
+}
+.template-preview[data-active] .tpv {
+  transition-duration: 0.15s;
+}
+.tpv-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at calc(30% + var(--px) * 120%) calc(20% + var(--py) * 120%),
+    rgba(255, 255, 255, 0.55),
+    transparent 55%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+  transition: opacity 0.4s;
+}
+.template-preview[data-active] .tpv-glare {
+  opacity: 1;
+}
+
+/* Parallax depth: feature blocks drift against the tilt. */
+.tpv-shop-hero,
+.tpv-menu-hero,
+.tpv-ed-image,
+.tpv-map,
+.tpv-booking .tpv-panel:last-child,
+.tpv-kpis,
+.tpv-progress {
+  transform: translate(calc(var(--px) * -0.7em), calc(var(--py) * -0.5em));
+  transition: transform 0.7s var(--tpv-ease);
+}
+.tpv-products,
+.tpv-dishes,
+.tpv-ed-cards,
+.tpv-list,
+.tpv-chart,
+.tpv-checklist {
+  transform: translate(calc(var(--px) * -0.3em), calc(var(--py) * -0.25em));
+  transition: transform 0.7s var(--tpv-ease);
+}
+.template-preview[data-active] :is(
+    .tpv-shop-hero,
+    .tpv-menu-hero,
+    .tpv-ed-image,
+    .tpv-map,
+    .tpv-booking .tpv-panel:last-child,
+    .tpv-kpis,
+    .tpv-progress,
+    .tpv-products,
+    .tpv-dishes,
+    .tpv-ed-cards,
+    .tpv-list,
+    .tpv-chart,
+    .tpv-checklist
+  ) {
+  transition-duration: 0.15s;
+}
+
+/* Floating card, lifted off the screen on the Z axis. */
+.tpv-float {
+  position: absolute;
+  right: -4%;
+  bottom: 9%;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  max-width: 50%;
+  padding: 0.65em 1.1em 0.65em 0.65em;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.15em;
+  line-height: 1.25;
+  color: #1f221d;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 0.75em;
+  box-shadow:
+    0 1.6em 2.6em -0.9em rgba(0, 0, 0, 0.6),
+    0 0.2em 0.6em rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(8px);
+  transform: translateZ(80px)
+    translate(calc(var(--px) * 1.2em), calc(var(--py) * 1em));
+  transition: transform 0.7s var(--tpv-ease);
+  animation: tpv-bob 5s ease-in-out infinite;
+}
+.template-preview[data-active] .tpv-float {
+  transition-duration: 0.15s;
+}
+.tpv-float > i {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.3em;
+  height: 2.3em;
+  font-style: normal;
+  color: #fff;
+  background: var(--tpv-accent);
+  border-radius: 0.55em;
+}
+.tpv-float > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: 0;
+}
+.tpv-float b,
+.tpv-float small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tpv-float b {
+  font-size: 0.95em;
+  font-weight: 650;
+}
+.tpv-float small {
+  font-size: 0.8em;
+  color: #767a6f;
+}
+@keyframes tpv-bob {
+  50% {
+    translate: 0 -0.45em;
+  }
+}
+
+/* Screens rise and settle into their tilt as they scroll into view. */
+@supports (animation-timeline: view()) {
+  .tpv-stage {
+    animation: tpv-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+  @keyframes tpv-rise {
+    from {
+      opacity: 0;
+      translate: 0 3em;
+      rotate: x 28deg;
+    }
+  }
+}
+
 .tpv {
   --tpv-bg: #f7f5f0;
   --tpv-ink: #1f221d;
@@ -220,7 +393,7 @@
   aspect-ratio: 16 / 10.5;
   overflow: hidden;
   font-family: "DM Sans", sans-serif;
-  font-size: 2.05cqi;
+  font-size: 1em;
   line-height: 1.3;
   color: var(--tpv-ink);
   background: var(--tpv-bg);
@@ -1371,4 +1544,24 @@
   .template-filters button:hover .filter-name {
     transform: none;
   }
+}
+
+/* Card actions: live demo + request */
+.template-preview-link {
+  display: block;
+}
+.template-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 20px;
+  margin: auto 6px 0;
+}
+.template-card .template-actions .text-link {
+  margin: 0;
+}
+.route-loading {
+  min-height: 100vh;
+  background: #f6f4ef;
 }

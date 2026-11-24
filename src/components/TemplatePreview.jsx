@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -491,30 +492,94 @@ const layouts = {
   editorial: Editorial,
 };
 
+/* Floating "live event" card that hovers in front of the screen in 3D. */
+function floatingCard({ layout, demo }) {
+  switch (layout) {
+    case "shop":
+      return { icon: faCartShopping, title: "New order", text: `${demo.items[1].n} · ${demo.items[1].p}` };
+    case "booking":
+      return { icon: faCircleCheck, title: "Booking confirmed", text: `${demo.month} ${demo.day} · ${demo.slots[demo.active]}` };
+    case "dashboard":
+      return { icon: faChartLine, title: `${demo.kpis[0][1]} ${demo.kpis[0][0].toLowerCase()}`, text: "+12% vs last week" };
+    case "listing":
+      return { icon: faBell, title: "New enquiry", text: demo.items[0].t };
+    case "menu":
+      return { icon: faClock, title: "Order received", text: demo.cart };
+    case "portal":
+      return { icon: faCircleCheck, title: demo.items[0][1], text: demo.items[0][0] };
+    default:
+      return { icon: faEnvelope, title: "New lead", text: demo.cta };
+  }
+}
+
+const canTilt = () =>
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export default function TemplatePreview({ template }) {
+  const ref = useRef(null);
+  const frame = useRef(0);
   const Layout = layouts[template.layout];
+  const float = floatingCard(template);
   const domain = `${template.demo.brand
     .toLowerCase()
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "")}.com`;
+
+  const onPointerMove = (event) => {
+    if (!canTilt()) return;
+    const el = ref.current;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const x = (event.clientX - left) / width - 0.5;
+    const y = (event.clientY - top) / height - 0.5;
+    cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      el.style.setProperty("--px", x.toFixed(3));
+      el.style.setProperty("--py", y.toFixed(3));
+      el.dataset.active = "true";
+    });
+  };
+  const onPointerLeave = () => {
+    cancelAnimationFrame(frame.current);
+    const el = ref.current;
+    el.style.removeProperty("--px");
+    el.style.removeProperty("--py");
+    delete el.dataset.active;
+  };
+
   return (
     <div
+      ref={ref}
       className="template-preview"
       style={{ "--tpv-accent": template.accent }}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       aria-hidden="true"
     >
-      <div className="tpv">
-        <div className="tpv-chrome">
-          <i />
-          <i />
-          <i />
-          <span>
-            <Icon icon={faLock} />
-            {domain}
-          </span>
+      <div className="tpv-stage">
+        <div className="tpv">
+          <div className="tpv-chrome">
+            <i />
+            <i />
+            <i />
+            <span>
+              <Icon icon={faLock} />
+              {domain}
+            </span>
+          </div>
+          <div className={`tpv-body tpv-layout-${template.layout}`}>
+            <Layout template={template} />
+          </div>
+          <div className="tpv-glare" />
         </div>
-        <div className={`tpv-body tpv-layout-${template.layout}`}>
-          <Layout template={template} />
+        <div className="tpv-float">
+          <i>
+            <Icon icon={float.icon} />
+          </i>
+          <span>
+            <b>{float.title}</b>
+            <small>{float.text}</small>
+          </span>
         </div>
       </div>
     </div>

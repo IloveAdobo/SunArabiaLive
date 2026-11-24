@@ -75,7 +75,7 @@ export const templateCategories = [
  * portal:    user, title, progress, items [[label, status]], nav
  * editorial: headline, sub, cta, items, progress
  */
-export const templates = [
+const templateList = [
   // Retail & E-commerce
   {
     name: "Online Store",
@@ -853,3 +853,75 @@ export const templates = [
     },
   },
 ];
+
+/* Headline used on each template's live demo site. */
+const taglines = {
+  "Online Store": "Your store, open every hour of every day.",
+  "B2B Wholesale Portal": "Trade ordering without the phone calls.",
+  "Grocery & Local Delivery": "Fresh groceries at your door within the hour.",
+  Pharmacy: "Prescriptions refilled in two clicks.",
+  "Restaurant & Ordering": "Order direct from the kitchen you love.",
+  "Hotel & Resort": "Wake up to the ocean. Book direct, pay less.",
+  "Café Loyalty & Pre-order": "Your usual, ready when you arrive.",
+  "Catering Company": "Unforgettable food for every occasion.",
+  "Medical Clinic": "Care that fits around your day.",
+  "Dental Practice": "Healthy smiles, booked in seconds.",
+  "Gym & Fitness Studio": "Train harder. Book smarter.",
+  "Salon & Spa": "Time for you, booked in seconds.",
+  "Veterinary & Pet Care": "Expert care for the ones who matter most.",
+  "Law Firm": "Clear counsel. Secure collaboration.",
+  "Accounting & Tax": "Tax season without the paper chase.",
+  "Consulting & Agency": "Strategy that survives contact with reality.",
+  "Recruitment & Job Board": "Where great people meet great roles.",
+  "Insurance Broker": "The right cover, quoted in minutes.",
+  "Property Listings": "Find the home that fits your life.",
+  "Property Management": "Happy tenants. Hands-off ownership.",
+  "Construction & Contractors": "Built on time. Built to last.",
+  "Interior Design Studio": "Rooms that feel like you.",
+  "School & Admissions": "Where curious minds grow.",
+  "Online Course Platform": "Learn from the best, at your own pace.",
+  "Tutoring & Coaching": "Confidence, one session at a time.",
+  "Training Centre": "Certified skills for safer workplaces.",
+  "Travel Agency & Tours": "Journeys you’ll talk about for years.",
+  "Courier & Logistics": "Shipped today. Tracked every mile.",
+  "Car Rental": "The right car, ready when you land.",
+  "Auto Repair & Service": "Honest repairs. Back on the road faster.",
+  "Car Dealership": "Your next car, without the runaround.",
+  "Event Ticketing": "The best nights out, one tap away.",
+  "Wedding & Event Planner": "Your day, beautifully handled.",
+  "Nonprofit & Charity": "Clean water for 10,000 families.",
+  "Membership Association": "A stronger profession, together.",
+  "Home Services": "A spotless home, booked in 60 seconds.",
+  "Moving & Storage": "Moving day, minus the stress.",
+  "Landscaping & Outdoor": "Gardens worth coming home to.",
+};
+
+const primaryAction = {
+  shop: "Shop now",
+  booking: "Book now",
+  dashboard: "Get started",
+  listing: "Start searching",
+  menu: "Order now",
+  portal: "Client login",
+  editorial: "Get in touch",
+};
+
+export const slugify = (text) =>
+  text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+export const templates = templateList.map((template) => ({
+  ...template,
+  slug: slugify(template.name),
+  tagline: taglines[template.name] ?? template.solves,
+  action:
+    template.layout === "editorial"
+      ? template.demo.cta
+      : primaryAction[template.layout],
+}));
+
+export const findTemplate = (slug) =>
+  templates.find((template) => template.slug === slug);

@@ -221,11 +221,21 @@ export default function LandingPage() {
   const [motionPaused, setMotionPaused] = useState(false);
   const motionDisabled = motionPaused || prefersReducedMotion;
   const pageRef = useRef(null);
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    company: "",
-    msg: "",
+  const [formState, setFormState] = useState(() => {
+    let requested = null;
+    try {
+      requested = sessionStorage.getItem("sa-template-request");
+    } catch {
+      /* storage unavailable */
+    }
+    return {
+      name: "",
+      email: "",
+      company: "",
+      msg: requested
+        ? `I'm interested in the ${requested} website template.`
+        : "",
+    };
   });
   const [reviewing, setReviewing] = useState(false);
   const [templateFilter, setTemplateFilter] = useState("All");
@@ -248,6 +258,21 @@ export default function LandingPage() {
   const menuButton = useRef(null);
   const firstMenuLink = useRef(null);
   const reviewHeading = useRef(null);
+  // Returning from a template demo: jump to the linked section and prefill
+  // the enquiry if "Request this template" was clicked there.
+  useEffect(() => {
+    try {
+      sessionStorage.removeItem("sa-template-request");
+    } catch {
+      /* storage unavailable */
+    }
+    const id = window.location.hash.slice(1);
+    if (id && !id.startsWith("/")) {
+      requestAnimationFrame(() =>
+        document.getElementById(id)?.scrollIntoView({ behavior: "auto" }),
+      );
+    }
+  }, []);
   useEffect(() => {
     const page = pageRef.current;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -749,7 +774,14 @@ export default function LandingPage() {
                 <div className="template-grid">
                   {visibleTemplates.map((template) => (
                     <article className="template-card" key={template.name}>
-                      <TemplatePreview template={template} />
+                      <a
+                        className="template-preview-link"
+                        href={`#/templates/${template.slug}`}
+                        tabIndex="-1"
+                        aria-hidden="true"
+                      >
+                        <TemplatePreview template={template} />
+                      </a>
                       <span className="template-category">{template.category}</span>
                       <h3>{template.name}</h3>
                       <p>{template.solves}</p>
@@ -758,15 +790,25 @@ export default function LandingPage() {
                           <li key={feature}>{feature}</li>
                         ))}
                       </ul>
-                      <a
-                        className="text-link"
-                        href="#contact"
-                        onClick={() => requestTemplate(template)}
-                      >
-                        Request this template
-                        <span className="sr-only">: {template.name}</span>
-                        <Arrow diagonal />
-                      </a>
+                      <div className="template-actions">
+                        <a
+                          className="button button-small"
+                          href={`#/templates/${template.slug}`}
+                        >
+                          Live demo
+                          <span className="sr-only">: {template.name}</span>
+                          <Arrow diagonal />
+                        </a>
+                        <a
+                          className="text-link"
+                          href="#contact"
+                          onClick={() => requestTemplate(template)}
+                        >
+                          Request
+                          <span className="sr-only"> the {template.name} template</span>
+                          <Arrow />
+                        </a>
+                      </div>
                     </article>
                   ))}
                 </div>
